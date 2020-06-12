@@ -13,12 +13,17 @@ mongoose.Promise = global.Promise;
 
 // Connecting to the database
 mongoose
-  .connect(process.env.MONGO_DB, {
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  })
+  .connect(
+    process.env.NODE_ENV === "production"
+      ? process.env.MONGO_DB
+      : process.env.MONGO_DB_TEST,
+    {
+      useFindAndModify: false,
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    }
+  )
   .then(() => {
     console.log("Successfully connected to the database");
   })
