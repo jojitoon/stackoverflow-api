@@ -223,6 +223,14 @@ describe("Question controller", () => {
     expect(res.body.message).toBe("Questions subscribed to");
     done();
   });
+  it("user should not subscribe to a question", async (done) => {
+    const res = await server
+      .post(`/subscribe/${question._id}`)
+      .set("authorization", user1.token);
+
+    expect(res.body.message).toBe("You cannot subscribe to your own question");
+    done();
+  });
 
   it("user should not subscribe to a question", async (done) => {
     const res = await server

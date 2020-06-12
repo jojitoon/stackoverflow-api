@@ -134,6 +134,12 @@ exports.subscribe = async (req, res) => {
 
     const user = await User.findById(currentUserId);
 
+    if (`${user._id}` === `${question.owner}`) {
+      return res.status(400).send({
+        status: "error",
+        message: "You cannot subscribe to your own question",
+      });
+    }
     const subscription = new Subscription({
       user: user._id,
       question: question._id,
